@@ -1,5 +1,5 @@
 ﻿# Nginx 入门实验
-https://github.com/czHappy/WEB-Server-Development/blob/nginx/exp%20nginx/nginx/access_log.PNG?raw=true
+
 ## 安装Nginx依赖库
 - 依赖库
     - Nginx中gzip模块需要zip库 rewrite模块需要pcre库 ssI功能需要openssl库
@@ -241,7 +241,8 @@ crontab -e
 ```bash
 #原理
 #每次到指定时间后 daily_nginx_log.sh被启动，将上一天的日志mv到新建日志文件，该日志文件自动重命名为kind-yyyy-mm-dd.log
-#mv操作事实上是一个剪切操作，这样的话能够保持原生的access.log或error.log被删去，而系统又会自动创建这两个文件，所以执行完脚本后这两个文件的内容是空的
+#mv操作事实上是一个剪切操作，这样的话能够保持原生的access.log或error.log被删去，而系统又会自动创建这两个文件，
+#所以执行完脚本后这两个文件的内容是空的
 #上一天的日志内容被转存到以天分割的压缩日志文件中
 ```
 ![](https://github.com/czHappy/WEB-Server-Development/blob/nginx/exp%20nginx/nginx/新增压缩功能.PNG?raw=true)
