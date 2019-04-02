@@ -197,6 +197,7 @@ $http_user_agent：记录客户端浏览器的相关信息。
 
 
 - error.log
+
 ![](https://github.com/czHappy/WEB-Server-Development/blob/nginx/exp%20nginx/nginx/error_log.PNG?raw=true)
 
 - 日志统计命令
