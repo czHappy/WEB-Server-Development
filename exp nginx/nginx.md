@@ -410,13 +410,16 @@ fi
 ```
 
 - 统计结果
-    - 统计最频繁访问的top 100 主机
+	- 统计最频繁访问的top 100 主机
+    
     ![](https://github.com/CUCCS/linux-2019-czHappy/blob/exp04/exp04/results/top100_host.PNG?raw=true)
-
-    - 统计4xx状态码信息
+	
+	- 统计4xx状态码信息
+    
     ![](https://github.com/CUCCS/linux-2019-czHappy/blob/exp04/exp04/results/4xx.PNG?raw=true)
 
-    - 统计最最频繁访问的top100 IP
+	- 统计最最频繁访问的top100 IP
+    
     ![](https://github.com/CUCCS/linux-2019-czHappy/blob/exp04/exp04/results/top100_ip.PNG?raw=true)
 
 
