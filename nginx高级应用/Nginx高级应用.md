@@ -221,12 +221,65 @@
     }
     ```
 ***
+## 配置nginx实现动静分离
+- 基本思路
+  - 静态文件如jpg png html 等代理到提供静态资源的后端服务器
+  - 动态文件如jsp php 等代理到提供动态资源的后端服务器
+- 配置文件
+```bash
+    server{
+        listen 80;
+        server_name www.cznginx.com;
+        location / {
+                proxy_pass http://nginxproxy;
+        }
+        location ~ .*.(gif|jpg|png|bmp|swf|css|js|html|htm) {
+                proxy_pass http://nginx01;
+        }
+        location ~ .*.(php|asp|jsp|cgi|perl) {
+                proxy_pass http://nginx02;
+        }
+    }
+
+```
+- 安装php-fpm运行php动态文件
+    - 安装 `yum install php php-mysql php-fpm`
+    - 启动 `systemctl start php-fpm`
+    - 在动态服务器server模块添加
+
+    ```bash
+     location ~ \.php$ {
+        try_files $uri =404;
+        fastcgi_pass unix:/var/run/php/php-fpm/php-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+    ```
+- 访问动态服务器失败，报错502Bad gateway
+  - 首先排除防火墙问题，关闭防火墙仍然无效
+  - 查看错误日志error.log
+
+    ![](./image/php日志.PNG)
+  - 找到错误，php-fpm.sock路径不正确，找到本机该文件路径/var/run/php-fpm/php-fpm.sock;修改重启服务即可
+
+- 结果
+  - 访问静态资源
+
+    ![](./image/static.PNG)
+  - 访问动态资源
+
+    ![](./image/dynamic.PNG)
+
+  - 注：这两种资源不在同一个后端服务器上，但是通过正则表达式识别url参数可以代理到相应的后端服务器进行请求。
+
+
+***
 ## 配置keepalived，实验和观察节点掉线和上线情况。
 - keepalived安装 
   - `yum -y install keepalived`
 
 - 实验架构图  
-
 
     ![](./image/架构.PNG)
 
@@ -285,4 +338,11 @@ vrrp_instance VI_1 {
 
     ![](./image/MB.PNG)
 
-
+***
+## 实验参考
+- [安装nginx php](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-centos-7)
+- [centos7防火墙操作](https://www.tecmint.com/install-configure-firewalld-in-centos-ubuntu/)
+- [keepalived 操作](https://klionsec.github.io/2017/12/23/keepalived-nginx/)
+- [rewrite和redirect](https://weblogs.asp.net/owscott/rewrite-vs-redirect-what-s-the-difference)
+- [yum 使用](https://www.tecmint.com/20-linux-yum-yellowdog-updater-modified-commands-for-package-mangement/)
+- [centos7配置网卡](https://www.serverlab.ca/tutorials/linux/administration-linux/how-to-configure-centos-7-network-settings/)
