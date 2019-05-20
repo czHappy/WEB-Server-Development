@@ -341,6 +341,10 @@ vrrp_instance VI_1 {
 
     ![](./image/MB.PNG)
 
+  - 使用虚IP访问服务器 192.168.56.118,主机即使宕机也能保证这个IP地址正常工作。
+
+    ![](./image/VIP访问.PNG)
+
 ***
 
 ## 五、NGINX配置调优
